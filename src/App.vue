@@ -7,29 +7,24 @@
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
-import todoList from './components/todoList'
+import todoList from "./components/todoList";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld,
-    todoList,
+    todoList
   }
-}
+};
 </script>
 
 <style>
-
 * {
   box-sizing: border-box;
-
 }
 
 .container {
   margin: 0 auto;
   width: 600px;
-
 }
 
 .logo {
@@ -39,7 +34,7 @@ export default {
 }
 
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
