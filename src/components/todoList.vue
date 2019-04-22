@@ -18,6 +18,7 @@
           v-else
           @blur="doneEdit(todo)"
           @keyup.enter="doneEdit(todo)"
+          @keyup.esc="cancelEdit(todo)"
           class="todo-item-edit"
           type="text"
           v-model="todo.title"
@@ -34,6 +35,7 @@ export default {
   name: "todoList",
   data() {
     return {
+      beforeEditCache: "",
       todoTitle: "",
       todoId: 3,
       todos: [
@@ -78,7 +80,12 @@ export default {
       this.todos.splice(index, 1);
     },
     editTodo(todo) {
+      this.beforeEditCache = todo.title;
       todo.editing = true;
+    },
+    cancelEdit(todo) {
+      todo.editing = false;
+      todo.title = this.beforeEditCache;
     },
     doneEdit(todo) {
       todo.editing = false;
