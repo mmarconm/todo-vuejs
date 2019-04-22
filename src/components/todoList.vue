@@ -9,10 +9,12 @@
     >
     <div v-for="(todo, index) in todos" :key="todo.id">
       <div class="todo-item-left">
+        <input type="checkbox" v-model="todo.completed">
         <div
           v-if="!todo.editing"
           @dblclick="editTodo(todo)"
           class="todo-item-label"
+          :class="{ completed : todo.completed }"
         >{{ todo.title }}</div>
         <input
           v-else
@@ -26,6 +28,16 @@
         >
       </div>
       <div class="remove-item" @click="removeTodo(index)">&times;</div>
+    </div>
+
+    <div class="extra-container">
+      <div>
+        <label>
+          <input type="checkbox" :checked="!anyRemaining" @change="checkAllTodos">
+          Check All
+        </label>
+      </div>
+      <div>{{ remaining }} Items Left</div>
     </div>
   </div>
 </template>
@@ -61,6 +73,14 @@ export default {
       }
     }
   },
+  computed: {
+    remaining() {
+      return this.todos.filter(todo => !todo.completed).length;
+    },
+    anyRemaining() {
+      return this.remaining != 0;
+    }
+  },
   methods: {
     addTodo() {
       if (this.newTodo.trim() == 0) {
@@ -92,6 +112,9 @@ export default {
         todo.title = this.beforeEditCache;
       }
       todo.editing = false;
+    },
+    checkAllTodos() {
+      this.todos.forEach(todo => (todo.completed = event.target.checked));
     }
   }
 };
@@ -105,7 +128,7 @@ export default {
 .todo-input {
   width: 100%;
   padding: 10px 10px;
-  font-size: 15px;
+  font-size: 18px;
   margin-bottom: 16px;
 
   &:focus {
@@ -144,6 +167,34 @@ export default {
 
   &:focus {
     outline: none;
+  }
+}
+
+.completed {
+  text-decoration: line-through;
+  color: red;
+}
+
+.extra-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 16px;
+  border-top: 1px solid lightgrey;
+  padding-top: 14px;
+  margin-bottom: 14px;
+}
+
+button {
+  font-size: 14px;
+  background-color: #fff;
+  appearance: none;
+
+  &:hover {
+    outline: none;
+  }
+  .active {
+    background-color: lightgreen;
   }
 }
 </style>
