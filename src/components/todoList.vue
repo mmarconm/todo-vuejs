@@ -88,6 +88,9 @@ export default {
       todo.title = this.beforeEditCache;
     },
     doneEdit(todo) {
+      if (todo.title.trim() == "") {
+        todo.title = this.beforeEditCache;
+      }
       todo.editing = false;
     }
   }
