@@ -21,6 +21,7 @@
           class="todo-item-edit"
           type="text"
           v-model="todo.title"
+          v-focus
         >
       </div>
       <div class="remove-item" @click="removeTodo(index)">&times;</div>
@@ -50,6 +51,13 @@ export default {
         }
       ]
     };
+  },
+  directives: {
+    focus: {
+      inserted: function(el) {
+        el.focus();
+      }
+    }
   },
   methods: {
     addTodo() {
